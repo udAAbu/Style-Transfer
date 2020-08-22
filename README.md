@@ -1,8 +1,11 @@
 # Style-Transfer
 Implement Style Transfer with Pytorch
 
-VGG19: This network accepts a colored image as input, and passes it through a series of convolutional and max pooling layers. followed by three fully connected layers to classify the image. 
-![alt text](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Content%20Loss.png)
+## VGG19: 
+
+This network accepts a colored image as input, and passes it through a series of convolutional and max pooling layers. followed by three fully connected layers to classify the image. 
+
+![VGG19](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Content%20Loss.png)
 
 Conv 1_1 is the first convolutional layer in the first stack. 
 Conv 2_1 is the first convolutional layer in the second stack. 
