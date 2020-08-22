@@ -1,6 +1,14 @@
 # Style-Transfer
 Implement Style Transfer with Pytorch
 
+Style transfer is about to generate a fusion image by combining a content image and a style image. The objects and arrangements in the new image are recognized from the content image, while the color, texture and other styles are extracted from the style image.
+
+Below are two excellent illustration on what style transfer is and how amazing it is.
+
+![Style Transfer](https://www.researchgate.net/profile/Jeremiah_Johnson18/publication/330828467/figure/fig1/AS:721849084297216@1549113641325/Two-examples-of-image-style-transfer-generated-using-the-neural-style-algorithm-of-Gatys.ppm)
+
+We will use a pre-trained VGG19 network to accomplish this task. We will extract the output from the second convolutional layer in the fourth stack of the network as the content representation of the image and the outputs from the first convolutional layer from all 5 stacks as the style representation because we want to include all kinds of styles features from the image.
+
 ## VGG19: 
 
 This network accepts a colored image as input, and passes it through a series of convolutional and max pooling layers. followed by three fully connected layers to classify the image. 
