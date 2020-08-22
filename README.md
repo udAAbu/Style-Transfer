@@ -30,15 +30,16 @@ To formalize this comparison, we define a content loss that calculates the diffe
 
 - Content Loss:
 
-Mean squared difference between pixel values
+ - Mean squared difference between pixel values
 
-![Content Loss](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Content%20Loss.png)
+ - ![Content Loss](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Content%20Loss.png)
 
-This measures how far away these two representations are from each other. As we try to create the best image, the goal is to minimize this loss. 
+ - This measures how far away these two representations are from each other. As we try to create the best image, the goal is to minimize this loss. 
 
-Here we are not using VGG19 as a classifier, we are using it as a feature extractor. We are not training CNN at all, we are using backpropagation to update the target image until its content representation matches the content representation of our content image and its style representation matches the style representation of the style image. 
+ - Here we are not using VGG19 as a classifier, we are using it as a feature extractor. We are not training CNN at all, we are using backpropagation to update the target image    until its content representation matches the content representation of our content image and its style representation matches the style representation of the style image. 
 
-Style Representation:
+### Style Representation:
+
 Looking at the correlation between features in individual layers of the VGG19 network, in other words, looking at how similar between the features in individual layers are. 
 If the correlation between one feature map with others are high, it means this feature has been captured by lots of feature maps, it can be a shape, texture or color. This feature is thought of as part of that image's style. 
 
@@ -46,22 +47,34 @@ By including multiple layers of different sizes, we can obtain a multiscale repr
 
 First we vectorize each feature map as a row: (8*4*4 feature maps in this layer)
 
+![Vectorize](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/vectorization.png)
+
 Multiply the vectorized feature maps with its transpose to get the gram matrix:
+
+![Gram Matrix](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/gram%20matrix.png)
 
 This final gram matrix will show the correlation between feature maps in one layer, and the dimension is only dependent on the number of feature maps in the convolutional layer instead of input image. 
 
-Style Loss:
+### Style Loss:
+
 Mean squared difference between the gram matrices of style image and the gram matrices of the target image. All five pairs(Conv 1_1 up to 5_1) are computed at each layer in the predefined list. 
 
-a represents the number of values in each layer. i represents the layer, and w is the specified style weights that determines how much effect each layer's representation will have on our final image. We will only update the target image pixel values to minimize this loss after some number of iterations. 
+![Style Loss](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Style%20Loss.png)
 
-Total Loss:
+*a* represents the number of values in each layer. *i* represents the layer, and *w* is the specified style weights that determines how much effect each layer's representation will have on our final image. We will only update the target image pixel values to minimize this loss after some number of iterations. 
+
+### Total Loss:
+
+![Total Loss](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Total%20Loss.png)
 
 Use typical backpropogation and optimization to reduce this total loss by updating the target image pixel values to match our desired content and styles. 
 
-Balance the weights between content loss and style loss:
-These two losses are very different from each other, and we would like to take both into account fairly equally. 
+- Balance the weights between content loss and style loss:
 
-We would like a appropriate ratio of a/b. If beta is too high, the images will be mostly styles without contents, while if the beta is too low, the images will be contents without much stylist effect. We need to change this weights for different style and content images. 
+ - These two losses are very different from each other, and we would like to take both into account fairly equally.
+ 
+ -![Loss Weights](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Loss%20weights.png)
+
+ - We would like a appropriate ratio of a/b. If beta is too high, the images will be mostly styles without contents, while if the beta is too low, the images will be contents without much stylist effect. We need to change this weights for different style and content images. 
 
 As the CNN goes deeper, the network cares about more the specific contents of the image rather than any detail about the texture and the color of pixels. Later layer of a network are sometimes referred to as a content representation of an image. 
