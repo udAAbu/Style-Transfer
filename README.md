@@ -5,33 +5,34 @@ Implement Style Transfer with Pytorch
 
 This network accepts a colored image as input, and passes it through a series of convolutional and max pooling layers. followed by three fully connected layers to classify the image. 
 
-![VGG19](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Content%20Loss.png)
+![VGG19](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/vgg19.png)
 
 Conv 1_1 is the first convolutional layer in the first stack. 
 Conv 2_1 is the first convolutional layer in the second stack. 
 The deepest convolutional layer in the network is Conv5_4 (the fourth convolutional layer in the fifth stack)
 
 Style Transfer aims to separate the content and style of an image. Given one style image and one content image, we aim to create a new fusion image:
-	1. 
-The objects and their arrangements are similar to that of the content image
-	2. 
-The style, color, and textures are similar to that of the style image. 
 
+* The objects and their arrangements are similar to that of the content image
+* The style, color, and textures are similar to that of the style image. 
 
+When the network sees the content image, it will go through the feed-forward process until it gets to a convolutional layer that is deep enough. The output of this layer will be the content representation of the input image. When it sees the style image, it will extract different features form multiple layers that represent the style of that image. 
 
-When the network sees the content image, it will go through the feed-forward process until it gets to a convolutional layer that is deep enough. The output of this layer will be the content representation of the input image. 
-When it sees the style image, it will extract different features form multiple layers that represent the style of that image. 
-
+### Target Image Initialization
 We start our target image as a copy of the content image, and keeps manipulate and update it so that its content is close to our content image and style close to our style image. 
 
-Content Representation:
+### Content Representation:
 
-The content representation of an image is the output from the second convolutional layer in the fourth stack, Conv 4_2
+The content representation of an image is the output from the second convolutional layer in the fourth stack(Conv 4_2).
+
 We will compare the content representation of the target image with the content representation of the content image. We want these two representation to be close. 
 To formalize this comparison, we define a content loss that calculates the difference between these two representations.
 
-Content Loss:
+- Content Loss:
+
 Mean squared difference between pixel values
+
+![Content Loss](https://github.com/udAAbu/Style-Transfer/blob/master/note%20images/Content%20Loss.png)
 
 This measures how far away these two representations are from each other. As we try to create the best image, the goal is to minimize this loss. 
 
